@@ -35,6 +35,16 @@ body {
     position: relative;
     top: 10px;
     border-radius: 4px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#results {
+    font-size: 48px;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 4px;
+    margin-bottom: -2px;
 }
 
 .btn-grid {
