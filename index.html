@@ -75,10 +75,17 @@
 </body>
 
 <script>
+    const results = document.querySelector('#results');
+
     let currentDisplay = '0';
-    let currentOperation = '+';
+    let currentOperation = '';
+    let lastOperation = '';
+    let lastOperand = '';
+    let resetDisplay = false;
     
     function operate(x, y, operator) {
+        x = +x;
+        y = +y;
         switch(operator) {
             case '+':
                 return x + y;
@@ -93,10 +100,57 @@
                 return x / y;
                 break;
             default:
-                console.log('error - invalid operator');
+                console.log('error - invalid operator', operator);
                 break;
         }
     }
+
+    function addNumberToScreen(e) {
+        const number = e.target.textContent.trim();
+        results.textContent === '0' || resetDisplay ? results.textContent = number : results.textContent += number;
+        resetDisplay = false;
+    }
+
+    function prepareToOperate(e) {
+        if(e.target.textContent.trim() === '=' && (currentOperation || lastOperation)) {
+            results.textContent = operate(currentDisplay, results.textContent, currentOperation || lastOperation);
+            lastOperation = currentOperation ? currentOperation : lastOperation;
+            currentOperation = '';
+        } else if(currentOperation) {
+            results.textContent = operate(currentDisplay, results.textContent, currentOperation);
+            lastOperation = currentOperation;
+            currentDisplay = results.textContent;
+            currentOperation = e.target.textContent.trim();
+        } else if(e.target.textContent.trim() !== '=') {
+            currentOperation = e.target.textContent.trim();
+            currentDisplay = results.textContent;
+        }
+
+        resetDisplay = true;
+    }
+
+    function addDecimal(e) {
+        if(!results.textContent.includes('.')) {
+            e.target.disabled = true;
+            results.textContent += '.';
+        } else {
+            e.target.disabled = false;
+        }
+    }
+
+    function clearCalculator() {
+        currentDisplay = '';
+        currentOperation = '';
+        lastOperation = '';
+        
+        results.textContent = '0';
+        resetDisplay = false;
+    }
+
+    document.querySelector('#clear').addEventListener('click', clearCalculator);
+    document.querySelector('#dec').addEventListener('click', addDecimal);
+    document.querySelectorAll('.number').forEach(btn => btn.addEventListener('click', addNumberToScreen));
+    document.querySelectorAll('.operator').forEach(btn => btn.addEventListener('click', prepareToOperate));
 </script>
 
 </html>

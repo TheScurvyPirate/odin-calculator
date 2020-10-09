@@ -45,6 +45,7 @@ body {
     font-family: 'Courier New', Courier, monospace;
     margin: 4px;
     margin-bottom: -2px;
+    overflow: hidden;
 }
 
 .btn-grid {
