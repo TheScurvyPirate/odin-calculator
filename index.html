@@ -142,13 +142,24 @@
         currentDisplay = '';
         currentOperation = '';
         lastOperation = '';
-        
+
         results.textContent = '0';
         resetDisplay = false;
     }
 
+    function convertToPercent() {
+        results.textContent = +results.textContent / 100;
+    }
+
+    function switchSign() {
+        results.textContent = +results.textContent * -1;
+    }
+
     document.querySelector('#clear').addEventListener('click', clearCalculator);
     document.querySelector('#dec').addEventListener('click', addDecimal);
+    document.querySelector('#percent').addEventListener('click', convertToPercent);
+    document.querySelector('#sign').addEventListener('click', switchSign);
+
     document.querySelectorAll('.number').forEach(btn => btn.addEventListener('click', addNumberToScreen));
     document.querySelectorAll('.operator').forEach(btn => btn.addEventListener('click', prepareToOperate));
 </script>
