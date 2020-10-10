@@ -162,7 +162,7 @@
             addNumberToScreen(e);
         } else if('-+/*'.includes(e.key)) {
             prepareToOperate(e)
-        } else if(e.key === 'Enter') {
+        } else if(e.key === 'Enter' || e.key === '=') {
             prepareToOperate({key: '='});
         } else if(e.key === 'Backspace') {
             results.textContent = results.textContent.substring(0, results.textContent.length - 1);
